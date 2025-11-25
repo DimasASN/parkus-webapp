@@ -1,5 +1,5 @@
 // Configuración de la API
-const API_URL = 'https://parkus-webapp-production.up.railway.app/api';
+const API_URL = 'https://parkus-backend-production.up.railway.app/api';
 
 // ============================================================
 // UTILIDAD PARA HACER REQUESTS
