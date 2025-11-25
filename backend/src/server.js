@@ -3,10 +3,9 @@ const cors = require('cors');
 const app = require('./app'); // <--- IMPORTA LA INSTANCIA DE EXPRESS CORRECTAMENTE
 const prisma = require('./config/database');
 
-// 🚨 SOLUCIÓN CORS: Usar tu URL pública como origen permitido
+// 🚨 SOLUCIÓN CORS: Usa la URL REAL de tu Frontend
 const FRONTEND_URL = 'https://courageous-contentment-production-eaff.up.railway.app'; 
 
-// 1. APLICAR CORS AL OBJETO 'app' (ANTES DE INICIAR EL SERVIDOR)
 app.use(cors({
     origin: FRONTEND_URL, 
     credentials: true 
