@@ -1,5 +1,5 @@
 // Configuración de la API
-const API_URL = 'http://localhost:3000/api';
+const API_URL = 'http://localhost:3000/apihttps://courageous-contentment-production-eaff.up.railway.app/api';
 
 // ============================================================
 // UTILIDAD PARA HACER REQUESTS
