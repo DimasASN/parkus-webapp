@@ -6,56 +6,141 @@ const { generateToken } = require('../utils/jwt');
  */
 async function register(req, res, next) {
   try {
+    console.log('\n========================================');
+    console.log('🚀 INICIO DE REGISTRO DE USUARIO');
+    console.log('========================================');
+    
     const { username, nombre, password, telefono, correo, id_tipo_usuario, id_empresa } = req.body;
 
-    console.log('📥 Datos recibidos en registro:', req.body);
+    console.log('📥 Datos recibidos:', {
+      username,
+      nombre,
+      correo,
+      telefono,
+      password: password ? '***' : undefined,
+      id_tipo_usuario,
+      id_empresa
+    });
 
-    // Validaciones básicas
-    if (!username || !password || !correo || !nombre) {
+    // ==========================================
+    // VALIDACIONES BÁSICAS
+    // ==========================================
+    if (!username) {
+      console.log('❌ Falta username');
       return res.status(400).json({
         success: false,
-        message: 'Username, nombre, password y correo son obligatorios',
+        message: 'El nombre de usuario es obligatorio',
+      });
+    }
+
+    if (!nombre) {
+      console.log('❌ Falta nombre');
+      return res.status(400).json({
+        success: false,
+        message: 'El nombre completo es obligatorio',
+      });
+    }
+
+    if (!password) {
+      console.log('❌ Falta password');
+      return res.status(400).json({
+        success: false,
+        message: 'La contraseña es obligatoria',
+      });
+    }
+
+    if (!correo) {
+      console.log('❌ Falta correo');
+      return res.status(400).json({
+        success: false,
+        message: 'El correo electrónico es obligatorio',
+      });
+    }
+
+    if (!telefono) {
+      console.log('❌ Falta teléfono');
+      return res.status(400).json({
+        success: false,
+        message: 'El teléfono es obligatorio',
       });
     }
 
     // Validar formato de correo
     const emailRegex = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/;
     if (!emailRegex.test(correo)) {
+      console.log('❌ Formato de correo inválido:', correo);
       return res.status(400).json({
         success: false,
         message: 'El formato del correo no es válido',
       });
     }
 
-    // Verificar si el usuario ya existe
+    console.log('✅ Validaciones básicas completadas');
+
+    // ==========================================
+    // VERIFICAR SI EL USUARIO YA EXISTE
+    // ==========================================
+    console.log('🔍 Verificando si el usuario ya existe...');
+    
     const existingUser = await prisma.usuario.findUnique({
-      where: { username },
+      where: { username: username.toLowerCase() },
     });
 
     if (existingUser) {
+      console.log('❌ Usuario ya existe:', username);
       return res.status(409).json({
         success: false,
-        message: 'El username ya está en uso',
+        message: 'El nombre de usuario ya está registrado. Por favor elige otro.',
       });
     }
 
-    // ✅ IMPORTANTE: Usuarios de la web siempre son tipo 3 (Cliente)
+    console.log('✅ Usuario disponible');
+
+    // ==========================================
+    // PREPARAR DATOS PARA INSERTAR
+    // ==========================================
     const tipoUsuario = id_tipo_usuario || 3;
     
-    // Preparar datos para insertar
     const datosUsuario = {
-      username: username.toLowerCase(), // Asegurar minúsculas
-      nombre,
-      password, // ← SIN hashear (como está actualmente)
+      username: username.toLowerCase().trim(),
+      nombre: nombre.trim(),
+      password: password, // SIN hashear
       telefono: telefono ? BigInt(telefono) : null,
-      correo,
-      id_tipo_usuario: tipoUsuario, // ✅ Por defecto tipo 3 (Cliente)
-      id_empresa: id_empresa || null, // ✅ null por defecto
+      correo: correo.trim(),
+      id_tipo_usuario: tipoUsuario,
+      id_empresa: id_empresa || null,
     };
 
-    console.log('💾 Intentando insertar usuario:', datosUsuario);
+    console.log('💾 Datos preparados para insertar:', {
+      ...datosUsuario,
+      password: '***',
+      telefono: datosUsuario.telefono ? datosUsuario.telefono.toString() : null
+    });
+
+    // ==========================================
+    // VERIFICAR QUE EXISTE EL TIPO DE USUARIO
+    // ==========================================
+    console.log('🔍 Verificando tipo de usuario en BD...');
     
-    // Crear usuario (contraseña sin hashear)
+    const tipoExiste = await prisma.tipo_usuario.findUnique({
+      where: { id: tipoUsuario }
+    });
+
+    if (!tipoExiste) {
+      console.log('❌ Tipo de usuario no existe en BD:', tipoUsuario);
+      return res.status(400).json({
+        success: false,
+        message: 'Error de configuración: tipo de usuario inválido',
+      });
+    }
+
+    console.log('✅ Tipo de usuario existe:', tipoExiste.nombre);
+
+    // ==========================================
+    // INSERTAR EN BASE DE DATOS
+    // ==========================================
+    console.log('💾 Intentando crear usuario en BD...');
+    
     const newUser = await prisma.usuario.create({
       data: datosUsuario,
       select: {
@@ -68,7 +153,11 @@ async function register(req, res, next) {
       },
     });
 
-    console.log('✅ Usuario creado exitosamente:', newUser);
+    console.log('✅✅✅ USUARIO CREADO EXITOSAMENTE ✅✅✅');
+    console.log('Usuario creado:', {
+      ...newUser,
+      telefono: newUser.telefono ? newUser.telefono.toString() : null
+    });
 
     // Convertir BigInt a string para JSON
     const userData = {
@@ -76,30 +165,53 @@ async function register(req, res, next) {
       telefono: newUser.telefono ? newUser.telefono.toString() : null,
     };
 
+    console.log('========================================');
+    console.log('🎉 REGISTRO COMPLETADO CON ÉXITO');
+    console.log('========================================\n');
+
     res.status(201).json({
       success: true,
-      message: 'Usuario registrado exitosamente',
+      message: '¡Usuario registrado exitosamente! Ahora puedes iniciar sesión.',
       data: userData,
     });
+
   } catch (error) {
-    console.error('❌ Error en registro:', error);
+    console.log('\n========================================');
+    console.error('❌❌❌ ERROR EN REGISTRO ❌❌❌');
+    console.error('Tipo de error:', error.constructor.name);
+    console.error('Código de error:', error.code);
+    console.error('Mensaje:', error.message);
+    console.error('Stack:', error.stack);
+    console.log('========================================\n');
     
     // Errores específicos de Prisma
     if (error.code === 'P2002') {
+      const campo = error.meta?.target?.[0] || 'campo';
       return res.status(409).json({
         success: false,
-        message: 'El username ya está registrado',
+        message: `El ${campo} ya está registrado. Por favor usa otro.`,
       });
     }
     
     if (error.code === 'P2003') {
       return res.status(400).json({
         success: false,
-        message: 'Error de clave foránea: verifica id_tipo_usuario e id_empresa',
+        message: 'Error de configuración en la base de datos. Contacta al administrador.',
+      });
+    }
+
+    if (error.code === 'P2010') {
+      return res.status(500).json({
+        success: false,
+        message: 'Error de consulta en la base de datos. Verifica los datos ingresados.',
       });
     }
     
-    next(error);
+    return res.status(500).json({
+      success: false,
+      message: 'Error al registrar usuario. Por favor intenta de nuevo.',
+      error: process.env.NODE_ENV === 'development' ? error.message : undefined
+    });
   }
 }
 
@@ -110,7 +222,7 @@ async function login(req, res, next) {
   try {
     const { username, password } = req.body;
 
-    console.log('🔐 Intento de login:', { username });
+    console.log('🔐 Intento de login:', username);
 
     // Validaciones
     if (!username || !password) {
@@ -122,7 +234,7 @@ async function login(req, res, next) {
 
     // Buscar usuario
     const user = await prisma.usuario.findUnique({
-      where: { username: username.toLowerCase() }, // Buscar en minúsculas
+      where: { username: username.toLowerCase() },
       include: {
         tipo_usuario: true,
         empresa: true,
@@ -133,16 +245,16 @@ async function login(req, res, next) {
       console.log('❌ Usuario no encontrado:', username);
       return res.status(401).json({
         success: false,
-        message: 'Credenciales inválidas',
+        message: 'Usuario o contraseña incorrectos',
       });
     }
 
-    // Verificar contraseña (comparación directa, sin bcrypt)
+    // Verificar contraseña (comparación directa)
     if (password !== user.password) {
       console.log('❌ Contraseña incorrecta para:', username);
       return res.status(401).json({
         success: false,
-        message: 'Credenciales inválidas',
+        message: 'Usuario o contraseña incorrectos',
       });
     }
 
@@ -167,7 +279,7 @@ async function login(req, res, next) {
 
     res.json({
       success: true,
-      message: 'Login exitoso',
+      message: '¡Bienvenido de nuevo!',
       data: {
         user: userData,
         token,
