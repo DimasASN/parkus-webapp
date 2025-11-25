@@ -1,43 +1,43 @@
 <script>
-document.getElementById("registerForm").addEventListener("submit", async (e) => {
-    e.preventDefault();
+document.addEventListener("DOMContentLoaded", () => {
 
-    // URL REAL de tu backend en Railway o localhost
-    const BACKEND_URL = "https://parkus-webapp-production.up.railway.app/api";
+    const BACKEND_URL = "TU_BACKEND_URL_AQUI";
 
-    const data = {
-        username: document.getElementById("username").value,
-        nombre: document.getElementById("nombre").value,
-        correo: document.getElementById("correo").value,
-        telefono: document.getElementById("telefono").value,
-        password: document.getElementById("password").value,
+    const form = document.getElementById("registerForm");
 
-        // Valores fijos que usa tu modelo de negocio
-        id_tipo_usuario: 3,
-        id_empresa: null
-    };
+    form.addEventListener("submit", async (e) => {
+        e.preventDefault();
 
-    try {
-        const response = await fetch(`${BACKEND_URL}/api/auth/register`, {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify(data),
-        });
+        const data = {
+            username: document.getElementById("username").value,
+            nombre: document.getElementById("nombre").value,
+            correo: document.getElementById("correo").value,
+            telefono: document.getElementById("telefono").value,
+            password: document.getElementById("password").value,
+            id_tipo_usuario: 3,
+            id_empresa: null
+        };
 
-        const result = await response.json();
+        try {
+            const response = await fetch(`${BACKEND_URL}/api/auth/register`, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(data)
+            });
 
-        if (response.ok) {
-            alert("Usuario registrado exitosamente");
-            window.location.href = "login.html";
-        } else {
-            alert(result.message || "Error al registrar usuario");
+            const result = await response.json();
+
+            if (response.ok) {
+                alert("Usuario registrado exitosamente");
+                window.location.href = "login.html";
+            } else {
+                alert(result.message || "Error al registrar usuario");
+            }
+
+        } catch (error) {
+            console.error("Error:", error);
+            alert("Error al conectar con el servidor.");
         }
-
-    } catch (error) {
-        console.error("Error:", error);
-        alert("Error al conectar con el servidor.");
-    }
+    });
 });
 </script>
