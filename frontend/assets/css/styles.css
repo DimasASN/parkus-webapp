@@ -1,0 +1,750 @@
+/* ============================================
+   VARIABLES Y RESET
+   ============================================ */
+   :root {
+    --primary: #2563eb;
+    --primary-dark: #1e40af;
+    --primary-light: #3b82f6;
+    --secondary: #10b981;
+    --danger: #ef4444;
+    --warning: #f59e0b;
+    --dark: #1f2937;
+    --gray: #6b7280;
+    --light-gray: #f3f4f6;
+    --border: #e5e7eb;
+    --white: #ffffff;
+    --shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1);
+    --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1);
+    --radius: 12px;
+    --radius-sm: 8px;
+    --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    background: var(--light-gray);
+    color: var(--dark);
+    line-height: 1.6;
+    min-height: 100vh;
+  }
+  
+  /* ============================================
+     HEADER MEJORADO
+     ============================================ */
+  .header {
+    background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+    color: white;
+    padding: 1.5rem 2rem;
+    box-shadow: var(--shadow-md);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .logo {
+    font-size: 1.8rem;
+    font-weight: 800;
+    letter-spacing: -0.5px;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  
+  .logo::before {
+    content: "🅿️";
+    font-size: 2rem;
+  }
+  
+  .plain-btn {
+    background: rgba(255, 255, 255, 0.2);
+    border: none;
+    color: white;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: var(--transition);
+  }
+  
+  .plain-btn:hover {
+    background: rgba(255, 255, 255, 0.3);
+    transform: translateX(-2px);
+  }
+  
+  /* ============================================
+     CONTAINER Y LAYOUT
+     ============================================ */
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem;
+  }
+  
+  /* ============================================
+     HERO SECTION (INDEX)
+     ============================================ */
+  .hero {
+    text-align: center;
+    padding: 4rem 2rem;
+    background: white;
+    border-radius: var(--radius);
+    box-shadow: var(--shadow-md);
+    margin-bottom: 2rem;
+  }
+  
+  .hero h2 {
+    font-size: 2.5rem;
+    font-weight: 800;
+    color: var(--dark);
+    margin-bottom: 1rem;
+    line-height: 1.2;
+  }
+  
+  .hero p {
+    font-size: 1.2rem;
+    color: var(--gray);
+    margin-bottom: 2rem;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  
+  /* ============================================
+     CONTROLES Y FILTROS
+     ============================================ */
+  .controls {
+    background: white;
+    padding: 1.5rem;
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    margin-bottom: 2rem;
+  }
+  
+  .search-row {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1rem;
+  }
+  
+  .search-row input[type="search"] {
+    flex: 1;
+    padding: 0.875rem 1.25rem;
+    border: 2px solid var(--border);
+    border-radius: var(--radius-sm);
+    font-size: 1rem;
+    transition: var(--transition);
+  }
+  
+  .search-row input[type="search"]:focus {
+    outline: none;
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+  }
+  
+  .small-btn {
+    width: 48px;
+    height: 48px;
+    background: var(--primary);
+    color: white;
+    border: none;
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    font-size: 1.5rem;
+    transition: var(--transition);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .small-btn:hover {
+    background: var(--primary-dark);
+    transform: rotate(180deg);
+  }
+  
+  .filters-row {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+  
+  .filters-row select {
+    padding: 0.75rem 1rem;
+    border: 2px solid var(--border);
+    border-radius: var(--radius-sm);
+    font-size: 0.95rem;
+    cursor: pointer;
+    background: white;
+    transition: var(--transition);
+  }
+  
+  .filters-row select:hover {
+    border-color: var(--primary);
+  }
+  
+  .filters-row select:focus {
+    outline: none;
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+  }
+  
+  /* Switch Toggle */
+  .switch {
+    position: relative;
+    display: inline-block;
+    width: 52px;
+    height: 28px;
+  }
+  
+  .switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+  }
+  
+  .slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: var(--border);
+    border-radius: 34px;
+    transition: var(--transition);
+  }
+  
+  .slider:before {
+    position: absolute;
+    content: "";
+    height: 20px;
+    width: 20px;
+    left: 4px;
+    bottom: 4px;
+    background: white;
+    border-radius: 50%;
+    transition: var(--transition);
+  }
+  
+  input:checked + .slider {
+    background: var(--primary);
+  }
+  
+  input:checked + .slider:before {
+    transform: translateX(24px);
+  }
+  
+  /* ============================================
+     LISTA DE PARQUEADEROS
+     ============================================ */
+  .list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+    gap: 1.5rem;
+  }
+  
+  .parqueadero-card {
+    background: white;
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    overflow: hidden;
+    transition: var(--transition);
+    border: 2px solid transparent;
+  }
+  
+  .parqueadero-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-lg);
+    border-color: var(--primary-light);
+  }
+  
+  .card-header {
+    padding: 1.5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    border-bottom: 1px solid var(--border);
+    gap: 1rem;
+  }
+  
+  .card-header h3 {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--dark);
+    margin: 0;
+    flex: 1;
+  }
+  
+  .precio-badge {
+    background: linear-gradient(135deg, var(--secondary) 0%, #059669 100%);
+    color: white;
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    font-weight: 700;
+    font-size: 0.95rem;
+    white-space: nowrap;
+    box-shadow: 0 2px 4px rgba(16, 185, 129, 0.3);
+  }
+  
+  .card-body {
+    padding: 1.5rem;
+  }
+  
+  .direccion {
+    color: var(--gray);
+    font-size: 0.95rem;
+    margin-bottom: 0.75rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  
+  .direccion::before {
+    content: "📍";
+    font-size: 1.1rem;
+  }
+  
+  .descripcion {
+    color: var(--gray);
+    font-size: 0.9rem;
+    margin-bottom: 1rem;
+    line-height: 1.5;
+  }
+  
+  .disponibilidad-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 1rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--border);
+  }
+  
+  .capacidad {
+    color: var(--gray);
+    font-size: 0.9rem;
+    font-weight: 500;
+  }
+  
+  .disponibilidad-badge {
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    font-weight: 600;
+    font-size: 0.875rem;
+  }
+  
+  .alta-disponibilidad {
+    background: #d1fae5;
+    color: #065f46;
+  }
+  
+  .media-disponibilidad {
+    background: #fed7aa;
+    color: #92400e;
+  }
+  
+  .baja-disponibilidad {
+    background: #fee2e2;
+    color: #991b1b;
+  }
+  
+  .sin-espacios {
+    background: var(--light-gray);
+    color: var(--gray);
+  }
+  
+  .card-footer {
+    padding: 1.5rem;
+    background: var(--light-gray);
+    border-top: 1px solid var(--border);
+  }
+  
+  /* ============================================
+     BOTONES
+     ============================================ */
+  .btn-primary,
+  .btn-secondary {
+    padding: 0.875rem 1.75rem;
+    border: none;
+    border-radius: var(--radius-sm);
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: var(--transition);
+    display: inline-block;
+    text-decoration: none;
+    text-align: center;
+    width: 100%;
+  }
+  
+  .btn-primary {
+    background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+    color: white;
+    box-shadow: 0 4px 6px rgba(37, 99, 235, 0.3);
+  }
+  
+  .btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(37, 99, 235, 0.4);
+  }
+  
+  .btn-primary:active {
+    transform: translateY(0);
+  }
+  
+  .btn-secondary {
+    background: white;
+    color: var(--primary);
+    border: 2px solid var(--primary);
+  }
+  
+  .btn-secondary:hover {
+    background: var(--primary);
+    color: white;
+  }
+  
+  .btn-disabled {
+    background: var(--light-gray);
+    color: var(--gray);
+    padding: 0.875rem 1.75rem;
+    border: none;
+    border-radius: var(--radius-sm);
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: not-allowed;
+    width: 100%;
+    opacity: 0.6;
+  }
+  
+  /* ============================================
+     FORMULARIOS
+     ============================================ */
+  .form {
+    background: white;
+    padding: 2rem;
+    border-radius: var(--radius);
+    box-shadow: var(--shadow-md);
+    max-width: 500px;
+    margin: 2rem auto;
+  }
+  
+  .form label {
+    display: block;
+    font-weight: 600;
+    color: var(--dark);
+    margin-bottom: 0.5rem;
+    font-size: 0.95rem;
+  }
+  
+  .form input,
+  .form select,
+  .form textarea {
+    width: 100%;
+    padding: 0.875rem 1.25rem;
+    border: 2px solid var(--border);
+    border-radius: var(--radius-sm);
+    font-size: 1rem;
+    margin-bottom: 1.25rem;
+    transition: var(--transition);
+    font-family: inherit;
+  }
+  
+  .form input:focus,
+  .form select:focus,
+  .form textarea:focus {
+    outline: none;
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+  }
+  
+  .form h4 {
+    margin: 2rem 0 1rem;
+    padding-top: 2rem;
+    border-top: 2px solid var(--border);
+    color: var(--dark);
+    font-size: 1.1rem;
+  }
+  
+  /* ============================================
+     MAPA DE LUGARES
+     ============================================ */
+  .lugares-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(90px, 1fr));
+    gap: 1rem;
+    margin-top: 1.5rem;
+  }
+  
+  .lugar-card {
+    aspect-ratio: 1;
+    border: 3px solid var(--border);
+    border-radius: var(--radius-sm);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: var(--transition);
+    background: white;
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .lugar-card::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: var(--border);
+    transition: var(--transition);
+  }
+  
+  .lugar-card.estado-disponible {
+    border-color: var(--secondary);
+    background: #ecfdf5;
+  }
+  
+  .lugar-card.estado-disponible::before {
+    background: var(--secondary);
+  }
+  
+  .lugar-card.estado-disponible:hover {
+    background: #d1fae5;
+    transform: scale(1.05);
+    box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+  }
+  
+  .lugar-card.estado-ocupado {
+    border-color: var(--danger);
+    background: #fef2f2;
+    cursor: not-allowed;
+    opacity: 0.7;
+  }
+  
+  .lugar-card.estado-ocupado::before {
+    background: var(--danger);
+  }
+  
+  .lugar-card.estado-reservado {
+    border-color: var(--warning);
+    background: #fffbeb;
+    cursor: not-allowed;
+  }
+  
+  .lugar-card.estado-reservado::before {
+    background: var(--warning);
+  }
+  
+  .lugar-card.seleccionado {
+    background: var(--primary) !important;
+    border-color: var(--primary-dark) !important;
+    color: white;
+    transform: scale(1.1);
+    box-shadow: 0 8px 16px rgba(37, 99, 235, 0.4);
+    z-index: 10;
+  }
+  
+  .lugar-card.seleccionado::before {
+    background: var(--primary-dark);
+  }
+  
+  .lugar-numero {
+    font-size: 1.75rem;
+    font-weight: 800;
+    margin-bottom: 0.25rem;
+  }
+  
+  .lugar-estado {
+    font-size: 0.7rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    opacity: 0.8;
+  }
+  
+  .lugar-placa {
+    font-size: 0.65rem;
+    font-weight: 600;
+    margin-top: 0.25rem;
+    padding: 0.25rem 0.5rem;
+    background: rgba(0, 0, 0, 0.1);
+    border-radius: 4px;
+  }
+  
+  .lugar-card.seleccionado .lugar-estado,
+  .lugar-card.seleccionado .lugar-placa {
+    color: white;
+    background: rgba(255, 255, 255, 0.2);
+  }
+  
+  /* ============================================
+     INFO STATS
+     ============================================ */
+  .info-stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 1rem;
+    margin: 2rem 0;
+  }
+  
+  .stat {
+    background: white;
+    padding: 1.5rem;
+    border-radius: var(--radius-sm);
+    border-left: 4px solid var(--primary);
+    box-shadow: var(--shadow);
+  }
+  
+  .stat.disponibles {
+    border-left-color: var(--secondary);
+  }
+  
+  .stat.ocupados {
+    border-left-color: var(--danger);
+  }
+  
+  .stat.precio {
+    border-left-color: var(--warning);
+  }
+  
+  .stat-label {
+    display: block;
+    font-size: 0.875rem;
+    color: var(--gray);
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+  }
+  
+  .stat-value {
+    display: block;
+    font-size: 1.75rem;
+    font-weight: 800;
+    color: var(--dark);
+  }
+  
+  /* ============================================
+     ESTADOS Y UTILIDADES
+     ============================================ */
+  .empty-state {
+    text-align: center;
+    padding: 4rem 2rem;
+    background: white;
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+  }
+  
+  .empty-state p {
+    color: var(--gray);
+    font-size: 1.1rem;
+    margin-bottom: 1.5rem;
+  }
+  
+  .text-center {
+    text-align: center;
+  }
+  
+  .link {
+    color: var(--primary);
+    text-decoration: none;
+    font-weight: 600;
+    transition: var(--transition);
+  }
+  
+  .link:hover {
+    color: var(--primary-dark);
+    text-decoration: underline;
+  }
+  
+  .title {
+    font-size: 2rem;
+    font-weight: 800;
+    color: var(--dark);
+    margin-bottom: 2rem;
+    text-align: center;
+  }
+  
+  /* ============================================
+     RESPONSIVE
+     ============================================ */
+  @media (max-width: 768px) {
+    .container {
+      padding: 1rem;
+    }
+  
+    .hero h2 {
+      font-size: 1.75rem;
+    }
+  
+    .hero p {
+      font-size: 1rem;
+    }
+  
+    .list {
+      grid-template-columns: 1fr;
+    }
+  
+    .lugares-grid {
+      grid-template-columns: repeat(auto-fill, minmax(70px, 1fr));
+      gap: 0.75rem;
+    }
+  
+    .info-stats {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  
+    .filters-row {
+      flex-direction: column;
+      align-items: stretch;
+    }
+  
+    .filters-row select {
+      width: 100%;
+    }
+  }
+  
+  /* ============================================
+     ANIMACIONES
+     ============================================ */
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  .parqueadero-card {
+    animation: fadeIn 0.5s ease-out;
+  }
+  
+  @keyframes pulse {
+    0%, 100% {
+      opacity: 1;
+    }
+    50% {
+      opacity: 0.5;
+    }
+  }
+  
+  #loadingIndicator {
+    animation: pulse 1.5s ease-in-out infinite;
+  }

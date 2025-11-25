@@ -1,0 +1,138 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+// ============================================================
+// MODELO: EMPRESA
+// ============================================================
+model empresa {
+  id_empresa   Int      @id @default(autoincrement()) @db.Int
+  nombre       String?  @db.VarChar(100)
+  nit          BigInt?  @db.BigInt
+  telefono     BigInt?  @db.BigInt
+  direccion    String?  @db.VarChar(255)
+  descripcion  String?  @db.VarChar(50)
+
+  // Relaciones
+  info_park    info_park?
+  info_lugares info_lugares[]
+  usuarios     usuario[]
+
+  @@map("empresa")
+}
+
+// ============================================================
+// MODELO: INFO_PARK
+// ============================================================
+model info_park {
+  id_empresa       Int      @id @db.Int
+  cantidad_lugares Int?     @db.Int
+  precio_lugar     Decimal? @db.Decimal(10, 2)
+  lug_disponibles  Int?     @db.Int
+  lug_ocupados     Int?     @db.Int
+
+  // Relación con empresa
+  empresa empresa @relation(fields: [id_empresa], references: [id_empresa], onDelete: Cascade)
+
+  @@map("info_park")
+}
+
+// ============================================================
+// MODELO: ESTADO_LUGAR
+// ============================================================
+model estado_lugar {
+  id          Int     @id @db.Int
+  descripcion String? @db.VarChar(100)
+
+  // Relaciones
+  info_lugares info_lugares[]
+
+  @@map("estado_lugar")
+}
+
+// ============================================================
+// MODELO: INFO_LUGARES
+// ============================================================
+model info_lugares {
+  id_empresa      Int     @db.Int
+  lugar           Int     @db.Int
+  placa_vehiculo  String? @db.VarChar(20)
+  id_estado       Int?    @db.Int
+
+  // Relaciones
+  empresa       empresa        @relation(fields: [id_empresa], references: [id_empresa], onDelete: Cascade)
+  estado_lugar  estado_lugar?  @relation(fields: [id_estado], references: [id])
+
+  @@id([id_empresa, lugar])
+  @@map("info_lugares")
+}
+
+// ============================================================
+// MODELO: TIPO_USUARIO
+// ============================================================
+model tipo_usuario {
+  id     Int     @id @db.Int
+  nombre String? @db.VarChar(100)
+
+  // Relaciones
+  usuarios usuario[]
+
+  @@map("tipo_usuario")
+}
+
+// ============================================================
+// MODELO: USUARIO
+// ============================================================
+model usuario {
+  username        String  @id @db.VarChar(50)
+  nombre          String? @db.VarChar(150)
+  password        String? @db.VarChar(255)
+  telefono        BigInt? @db.BigInt
+  correo          String? @db.VarChar(150)
+  id_tipo_usuario Int?    @db.Int
+  id_empresa      Int?    @db.Int
+
+  // Relaciones
+  tipo_usuario tipo_usuario? @relation(fields: [id_tipo_usuario], references: [id])
+  empresa      empresa?      @relation(fields: [id_empresa], references: [id_empresa])
+
+  @@map("usuario")
+}
+
+// ============================================================
+// MODELO: INFO_CONDUCTOR
+// ============================================================
+model info_conductor {
+  documento String  @id @db.VarChar(20)
+  nombre    String? @db.VarChar(150)
+  telefono  BigInt? @db.BigInt
+  correo    String? @db.VarChar(150)
+
+  // Relaciones
+  vehiculos info_auto[]
+
+  @@map("info_conductor")
+}
+
+// ============================================================
+// MODELO: INFO_AUTO
+// ============================================================
+model info_auto {
+  placa         String  @id @db.VarChar(20)
+  modelo        String? @db.VarChar(50)
+  marca         String? @db.VarChar(50)
+  doc_conductor String? @db.VarChar(20)
+
+  // Relación con conductor
+  conductor info_conductor? @relation(fields: [doc_conductor], references: [documento])
+
+  @@map("info_auto")
+}

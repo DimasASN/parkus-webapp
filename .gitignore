@@ -1,0 +1,18 @@
+# Dependencias de Node
+/backend/node_modules
+/frontend/node_modules
+
+# Variables de entorno secretas
+/backend/.env
+
+# Archivos específicos de Prisma
+/backend/prisma/migrations
+/backend/prisma/dev.db
+
+# Archivos de build y logs
+*.log
+npm-debug.log*
+
+# Archivos específicos de IDE (opcional)
+.vscode
+.idea

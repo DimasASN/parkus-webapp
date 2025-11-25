@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>ParkUS - Parqueaderos disponibles</title>
+  <link rel="stylesheet" href="assets/css/styles.css" />
+</head>
+<body>
+
+  <header class="header">
+    <button id="backBtn" class="plain-btn" aria-label="Volver" onclick="window.location.href='index.html'">&larr;</button>
+    <h1 class="logo">ParkUS</h1>
+    <div style="width:40px"></div>
+  </header>
+
+  <main class="container">
+    <section class="controls">
+      <div class="search-row">
+        <input id="searchInput" type="search" placeholder="Buscar por nombre o dirección" aria-label="Buscar parqueadero">
+        <button id="refreshBtn" class="small-btn" title="Refrescar" onclick="cargarParqueaderos()">↻</button>
+      </div>
+
+      <div class="filters-row">
+        <select id="sortSelect" aria-label="Ordenar" onchange="aplicarFiltros()">
+          <option value="recomendado">Recomendado</option>
+          <option value="precio-asc">Precio: menor a mayor</option>
+          <option value="precio-desc">Precio: mayor a menor</option>
+          <option value="disponibles">Más disponibles primero</option>
+        </select>
+
+        <label class="switch">
+          <input id="onlyAvailableToggle" type="checkbox" onchange="aplicarFiltros()" />
+          <span class="slider"></span>
+        </label>
+        <small>Solo disponibles</small>
+      </div>
+    </section>
+
+    <!-- Loading indicator -->
+    <div id="loadingIndicator" style="text-align: center; padding: 2rem; display: none;">
+      <p>Cargando parqueaderos...</p>
+    </div>
+
+    <!-- Lista de parqueaderos -->
+    <section id="listContainer" class="list">
+      <!-- Tarjetas se renderizan aquí dinámicamente -->
+    </section>
+
+    <div id="emptyState" class="empty-state" hidden>
+      <p>No encontramos parqueaderos que coincidan.</p>
+      <button id="clearFiltersBtn" class="btn-secondary" onclick="limpiarFiltros()">Limpiar filtros</button>
+    </div>
+  </main>
+
+  <script src="js/api.js"></script>
+  <script src="js/parqueos.js"></script>
+</body>
+</html>

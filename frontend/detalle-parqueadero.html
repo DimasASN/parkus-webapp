@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>ParkUS - Detalle del parqueadero</title>
+  <link rel="stylesheet" href="assets/css/styles.css" />
+</head>
+<body>
+
+  <header class="header">
+    <button class="plain-btn" aria-label="Volver" onclick="window.location.href='parqueos.html'">&larr;</button>
+    <h1 class="logo">ParkUS</h1>
+    <div style="width:40px"></div>
+  </header>
+
+  <main class="container">
+    
+    <!-- Información del parqueadero -->
+    <section id="info-parqueadero" style="margin-bottom: 2rem;">
+      <div style="text-align: center; padding: 2rem;">Cargando...</div>
+    </section>
+
+    <!-- Mapa de lugares -->
+    <section id="lugares-section" style="margin-bottom: 2rem;">
+      <div style="background: white; padding: 2rem; border-radius: 12px; box-shadow: 0 1px 3px rgba(0,0,0,0.1);">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
+          <h3 style="font-size: 1.5rem; font-weight: 700; margin: 0;">Selecciona tu lugar</h3>
+          
+          <!-- Leyenda -->
+          <div style="display: flex; gap: 1.5rem; font-size: 0.875rem;">
+            <div style="display: flex; align-items: center; gap: 0.5rem;">
+              <div style="width: 20px; height: 20px; background: #ecfdf5; border: 2px solid #10b981; border-radius: 4px;"></div>
+              <span>Disponible</span>
+            </div>
+            <div style="display: flex; align-items: center; gap: 0.5rem;">
+              <div style="width: 20px; height: 20px; background: #fef2f2; border: 2px solid #ef4444; border-radius: 4px;"></div>
+              <span>Ocupado</span>
+            </div>
+            <div style="display: flex; align-items: center; gap: 0.5rem;">
+              <div style="width: 20px; height: 20px; background: #2563eb; border: 2px solid #1e40af; border-radius: 4px;"></div>
+              <span>Seleccionado</span>
+            </div>
+          </div>
+        </div>
+        
+        <div id="lugares-container" class="lugares-grid">
+          <!-- Se llenará dinámicamente -->
+        </div>
+      </div>
+    </section>
+
+    <!-- Formulario de reserva -->
+    <section id="reserva-section" style="margin-bottom: 2rem;">
+      <div style="background: white; padding: 2rem; border-radius: 12px; box-shadow: 0 1px 3px rgba(0,0,0,0.1);">
+        <h3 style="font-size: 1.5rem; font-weight: 700; margin-bottom: 1.5rem;">Completar Reserva</h3>
+        
+        <form id="reservaForm" class="form" style="padding: 0; box-shadow: none; margin: 0;">
+          
+          <div style="background: #eff6ff; padding: 1rem; border-radius: 8px; margin-bottom: 1.5rem; border-left: 4px solid #2563eb;">
+            <label for="numero_lugar" style="margin-bottom: 0.25rem;">Lugar seleccionado *</label>
+            <input type="number" id="numero_lugar" placeholder="Selecciona un lugar del mapa" required readonly style="background: white;">
+          </div>
+
+          <div style="border: 2px solid #e5e7eb; border-radius: 8px; padding: 1.5rem; margin-bottom: 1.5rem;">
+            <h4 style="margin: 0 0 1rem; padding: 0; border: none; font-size: 1.1rem;">👤 Datos del conductor</h4>
+            
+            <label for="doc_conductor">Documento de identidad *</label>
+            <input type="text" id="doc_conductor" placeholder="1234567890" required>
+
+            <label for="nombre_conductor">Nombre completo *</label>
+            <input type="text" id="nombre_conductor" placeholder="Juan Pérez" required>
+
+            <label for="telefono_conductor">Teléfono</label>
+            <input type="text" id="telefono_conductor" placeholder="3001234567">
+
+            <label for="correo_conductor">Correo electrónico</label>
+            <input type="email" id="correo_conductor" placeholder="juan@example.com">
+          </div>
+
+          <div style="border: 2px solid #e5e7eb; border-radius: 8px; padding: 1.5rem; margin-bottom: 1.5rem;">
+            <h4 style="margin: 0 0 1rem; padding: 0; border: none; font-size: 1.1rem;">🚗 Datos del vehículo</h4>
+
+            <label for="placa_vehiculo">Placa del vehículo *</label>
+            <input type="text" id="placa_vehiculo" placeholder="ABC123" required style="text-transform: uppercase;">
+
+            <label for="marca_vehiculo">Marca</label>
+            <input type="text" id="marca_vehiculo" placeholder="Toyota">
+
+            <label for="modelo_vehiculo">Modelo</label>
+            <input type="text" id="modelo_vehiculo" placeholder="Corolla" style="margin-bottom: 0;">
+          </div>
+
+          <button type="submit" class="btn-primary" style="font-size: 1.1rem; padding: 1rem;">
+            Confirmar Reserva
+          </button>
+        </form>
+      </div>
+    </section>
+
+    <!-- Consultar reserva por placa -->
+    <section id="consulta-section">
+      <h3>Consultar Reserva</h3>
+      <div style="display: flex; gap: 1rem; align-items: flex-end; margin-bottom: 1rem;">
+        <div style="flex: 1;">
+          <label for="consulta_placa">Buscar por placa</label>
+          <input type="text" id="consulta_placa" placeholder="ABC123">
+        </div>
+        <button id="consultarPlacaBtn" class="btn-secondary">Buscar</button>
+      </div>
+      <div id="resultado-consulta">
+        <!-- Resultados se mostrarán aquí -->
+      </div>
+    </section>
+
+  </main>
+
+  <script src="js/api.js"></script>
+  <script src="js/detalle-parqueadero.js"></script>
+</body>
+</html>
