@@ -12,7 +12,3 @@
 # Archivos de build y logs
 *.log
 npm-debug.log*
-
-# Archivos específicos de IDE (opcional)
-.vscode
-.idea
