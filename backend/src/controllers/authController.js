@@ -8,11 +8,22 @@ async function register(req, res, next) {
   try {
     const { username, nombre, password, telefono, correo, id_tipo_usuario, id_empresa } = req.body;
 
+    console.log('📥 Datos recibidos en registro:', req.body);
+
     // Validaciones básicas
-    if (!username || !password || !correo) {
+    if (!username || !password || !correo || !nombre) {
       return res.status(400).json({
         success: false,
-        message: 'Username, password y correo son obligatorios',
+        message: 'Username, nombre, password y correo son obligatorios',
+      });
+    }
+
+    // Validar formato de correo
+    const emailRegex = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/;
+    if (!emailRegex.test(correo)) {
+      return res.status(400).json({
+        success: false,
+        message: 'El formato del correo no es válido',
       });
     }
 
@@ -28,17 +39,25 @@ async function register(req, res, next) {
       });
     }
 
+    // ✅ IMPORTANTE: Usuarios de la web siempre son tipo 3 (Cliente)
+    const tipoUsuario = id_tipo_usuario || 3;
+    
+    // Preparar datos para insertar
+    const datosUsuario = {
+      username: username.toLowerCase(), // Asegurar minúsculas
+      nombre,
+      password, // ← SIN hashear (como está actualmente)
+      telefono: telefono ? BigInt(telefono) : null,
+      correo,
+      id_tipo_usuario: tipoUsuario, // ✅ Por defecto tipo 3 (Cliente)
+      id_empresa: id_empresa || null, // ✅ null por defecto
+    };
+
+    console.log('💾 Intentando insertar usuario:', datosUsuario);
+    
     // Crear usuario (contraseña sin hashear)
     const newUser = await prisma.usuario.create({
-      data: {
-        username,
-        nombre,
-        password, // ← SIN hashear
-        telefono: telefono ? BigInt(telefono) : null,
-        correo,
-        id_tipo_usuario: id_tipo_usuario || 2,
-        id_empresa: id_empresa || null,
-      },
+      data: datosUsuario,
       select: {
         username: true,
         nombre: true,
@@ -48,6 +67,8 @@ async function register(req, res, next) {
         id_empresa: true,
       },
     });
+
+    console.log('✅ Usuario creado exitosamente:', newUser);
 
     // Convertir BigInt a string para JSON
     const userData = {
@@ -61,6 +82,23 @@ async function register(req, res, next) {
       data: userData,
     });
   } catch (error) {
+    console.error('❌ Error en registro:', error);
+    
+    // Errores específicos de Prisma
+    if (error.code === 'P2002') {
+      return res.status(409).json({
+        success: false,
+        message: 'El username ya está registrado',
+      });
+    }
+    
+    if (error.code === 'P2003') {
+      return res.status(400).json({
+        success: false,
+        message: 'Error de clave foránea: verifica id_tipo_usuario e id_empresa',
+      });
+    }
+    
     next(error);
   }
 }
@@ -72,6 +110,8 @@ async function login(req, res, next) {
   try {
     const { username, password } = req.body;
 
+    console.log('🔐 Intento de login:', { username });
+
     // Validaciones
     if (!username || !password) {
       return res.status(400).json({
@@ -82,7 +122,7 @@ async function login(req, res, next) {
 
     // Buscar usuario
     const user = await prisma.usuario.findUnique({
-      where: { username },
+      where: { username: username.toLowerCase() }, // Buscar en minúsculas
       include: {
         tipo_usuario: true,
         empresa: true,
@@ -90,6 +130,7 @@ async function login(req, res, next) {
     });
 
     if (!user) {
+      console.log('❌ Usuario no encontrado:', username);
       return res.status(401).json({
         success: false,
         message: 'Credenciales inválidas',
@@ -98,11 +139,14 @@ async function login(req, res, next) {
 
     // Verificar contraseña (comparación directa, sin bcrypt)
     if (password !== user.password) {
+      console.log('❌ Contraseña incorrecta para:', username);
       return res.status(401).json({
         success: false,
         message: 'Credenciales inválidas',
       });
     }
+
+    console.log('✅ Login exitoso:', username);
 
     // Generar token
     const token = generateToken({
@@ -130,6 +174,7 @@ async function login(req, res, next) {
       },
     });
   } catch (error) {
+    console.error('❌ Error en login:', error);
     next(error);
   }
 }
