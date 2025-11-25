@@ -1,1 +1,8 @@
+root: .
+gzip: on
 
+paths:
+  /css:
+    enable_cors: true
+  /js:
+    enable_cors: true
