@@ -1,59 +1,45 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
     <title>ParkUS - Detalle del parqueadero</title>
     <link rel="stylesheet" href="assets/css/styles.css" />
 </head>
-
 <body>
-
     <header class="header">
-        <button class="plain-btn" aria-label="Volver" onclick="window.location.href='parqueos.html'">
-            ←
-        </button>
-        <a href="index.html" style="text-decoration: none;">
-            <h1 class="logo">ParkUS</h1>
-        </a>
-        <div style="width: 44px;"></div>
+        <button class="plain-btn" aria-label="Volver" onclick="window.location.href='parqueos.html'">&larr;</button>
+        <h1 class="logo">ParkUS</h1>
+        <div style="width:40px"></div>
     </header>
 
     <main class="container">
-
         <!-- Información del parqueadero -->
-        <section id="info-parqueadero" style="margin-bottom: 2.5rem;">
-            <div style="text-align: center; padding: 3rem; background: rgba(255,255,255,0.98); backdrop-filter: blur(10px); border-radius: 16px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); animation: fadeInUp 0.6s ease-out;">
-                <div style="display: inline-block; width: 50px; height: 50px; border: 5px solid rgba(102, 126, 234, 0.3); border-top-color: var(--primary); border-radius: 50%; animation: spin 1s linear infinite;"></div>
-                <p style="color: var(--gray); margin-top: 1rem; font-weight: 600;">Cargando información del parqueadero...</p>
-            </div>
+        <section id="info-parqueadero" style="margin-bottom: 2rem;">
+            <div style="text-align: center; padding: 2rem;">Cargando...</div>
         </section>
 
         <!-- Mapa de lugares -->
-        <section id="lugares-section" style="margin-bottom: 2.5rem; animation: fadeInUp 0.6s ease-out 0.1s both;">
-            <div style="background: rgba(255,255,255,0.98); backdrop-filter: blur(10px); padding: 2.5rem; border-radius: 16px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); border: 1px solid rgba(102, 126, 234, 0.1);">
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem; flex-wrap: wrap; gap: 1rem;">
-                    <h3 style="font-size: 1.75rem; font-weight: 800; margin: 0; background: linear-gradient(135deg, var(--dark) 0%, var(--gray) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">
-                        🅿️ Selecciona tu lugar
-                    </h3>
-                    
-                    <!-- Leyenda moderna -->
-                    <div style="display: flex; gap: 1.5rem; font-size: 0.875rem; flex-wrap: wrap;">
-                        <div style="display: flex; align-items: center; gap: 0.5rem; padding: 0.5rem 1rem; background: rgba(16, 185, 129, 0.1); border-radius: 20px;">
-                            <div style="width: 16px; height: 16px; background: linear-gradient(135deg, #d1fae5 0%, #a7f3d0 100%); border: 2px solid #10b981; border-radius: 4px;"></div>
-                            <span style="font-weight: 600; color: #065f46;">Disponible</span>
+        <section id="lugares-section" style="margin-bottom: 2rem;">
+            <div style="background: white; padding: 2rem; border-radius: 12px; box-shadow: 0 1px 3px rgba(0,0,0,0.1);">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
+                    <h3 style="font-size: 1.5rem; font-weight: 700; margin: 0;">Selecciona tu lugar</h3>
+                    <!-- Leyenda -->
+                    <div style="display: flex; gap: 1.5rem; font-size: 0.875rem;">
+                        <div style="display: flex; align-items: center; gap: 0.5rem;">
+                            <div style="width: 20px; height: 20px; background: #ecfdf5; border: 2px solid #10b981; border-radius: 4px;"></div>
+                            <span>Disponible</span>
                         </div>
-                        <div style="display: flex; align-items: center; gap: 0.5rem; padding: 0.5rem 1rem; background: rgba(239, 68, 68, 0.1); border-radius: 20px;">
-                            <div style="width: 16px; height: 16px; background: linear-gradient(135deg, #fee2e2 0%, #fca5a5 100%); border: 2px solid #ef4444; border-radius: 4px;"></div>
-                            <span style="font-weight: 600; color: #991b1b;">Ocupado</span>
+                        <div style="display: flex; align-items: center; gap: 0.5rem;">
+                            <div style="width: 20px; height: 20px; background: #fef2f2; border: 2px solid #ef4444; border-radius: 4px;"></div>
+                            <span>Ocupado</span>
                         </div>
-                        <div style="display: flex; align-items: center; gap: 0.5rem; padding: 0.5rem 1rem; background: rgba(37, 99, 235, 0.1); border-radius: 20px;">
-                            <div style="width: 16px; height: 16px; background: linear-gradient(135deg, #2563eb 0%, #1e40af 100%); border: 2px solid #1e40af; border-radius: 4px;"></div>
-                            <span style="font-weight: 600; color: #1e40af;">Seleccionado</span>
+                        <div style="display: flex; align-items: center; gap: 0.5rem;">
+                            <div style="width: 20px; height: 20px; background: #2563eb; border: 2px solid #1e40af; border-radius: 4px;"></div>
+                            <span>Seleccionado</span>
                         </div>
                     </div>
                 </div>
-                
                 <div id="lugares-container" class="lugares-grid">
                     <!-- Se llenará dinámicamente -->
                 </div>
@@ -64,14 +50,11 @@
         <section id="reserva-section" style="margin-bottom: 2rem;">
             <div style="background: white; padding: 2rem; border-radius: 12px; box-shadow: 0 1px 3px rgba(0,0,0,0.1);">
                 <h3 style="font-size: 1.5rem; font-weight: 700; margin-bottom: 1.5rem;">Completar Reserva</h3>
-                
                 <form id="reservaForm" class="form" style="padding: 0; box-shadow: none; margin: 0;">
-                    
                     <div style="background: #eff6ff; padding: 1rem; border-radius: 8px; margin-bottom: 1.5rem; border-left: 4px solid #2563eb;">
                         <label for="numero_lugar" style="margin-bottom: 0.25rem;">Lugar seleccionado *</label>
                         <input type="number" id="numero_lugar" placeholder="Selecciona un lugar del mapa" required readonly style="background: white;">
                     </div>
-
                     <div style="border: 2px solid #e5e7eb; border-radius: 8px; padding: 1.5rem; margin-bottom: 1.5rem;">
                         <h4 style="margin: 0 0 1rem; padding: 0; border: none; font-size: 1.1rem;">👤 Datos del conductor</h4>
                         <label for="doc_conductor">Documento de identidad *</label>
@@ -83,7 +66,6 @@
                         <label for="correo_conductor">Correo electrónico</label>
                         <input type="email" id="correo_conductor" placeholder="juan@example.com">
                     </div>
-
                     <div style="border: 2px solid #e5e7eb; border-radius: 8px; padding: 1.5rem; margin-bottom: 1.5rem;">
                         <h4 style="margin: 0 0 1rem; padding: 0; border: none; font-size: 1.1rem;">🚗 Datos del vehículo</h4>
                         <label for="placa_vehiculo">Placa del vehículo *</label>
@@ -93,7 +75,6 @@
                         <label for="modelo_vehiculo">Modelo</label>
                         <input type="text" id="modelo_vehiculo" placeholder="Corolla" style="margin-bottom: 0;">
                     </div>
-
                     <button type="submit" class="btn-primary" style="font-size: 1.1rem; padding: 1rem;">
                         Confirmar Reserva
                     </button>
@@ -115,25 +96,10 @@
                 <!-- Resultados se mostrarán aquí -->
             </div>
         </section>
-
     </main>
 
     <style>
-        @keyframes spin {
-            to { transform: rotate(360deg); }
-        }
-
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
+        /* Estilos premium solo para los botones de lugares */
         .lugares-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
@@ -152,7 +118,27 @@
             cursor: pointer;
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             border: 2px solid;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .lugar-item::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.4);
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+        }
+
+        .lugar-item:hover::before {
+            width: 200%;
+            height: 200%;
         }
 
         .lugar-disponible {
@@ -162,8 +148,12 @@
         }
 
         .lugar-disponible:hover {
-            transform: translateY(-4px) scale(1.05);
-            box-shadow: 0 8px 16px rgba(16, 185, 129, 0.3);
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 8px 20px rgba(16, 185, 129, 0.35);
+        }
+
+        .lugar-disponible:active {
+            transform: translateY(-3px) scale(1.02);
         }
 
         .lugar-ocupado {
@@ -171,7 +161,12 @@
             border-color: #ef4444;
             color: #991b1b;
             cursor: not-allowed;
-            opacity: 0.7;
+            opacity: 0.65;
+        }
+
+        .lugar-ocupado:hover {
+            transform: none;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
         }
 
         .lugar-seleccionado {
@@ -179,36 +174,28 @@
             border-color: #1e40af;
             color: white;
             transform: scale(1.1);
-            box-shadow: 0 8px 20px rgba(37, 99, 235, 0.4);
-            animation: pulse-selection 2s infinite;
+            box-shadow: 0 8px 25px rgba(37, 99, 235, 0.5);
+            animation: pulse-selection 2s ease-in-out infinite;
         }
 
         @keyframes pulse-selection {
             0%, 100% {
-                box-shadow: 0 8px 20px rgba(37, 99, 235, 0.4);
+                box-shadow: 0 8px 25px rgba(37, 99, 235, 0.5);
             }
             50% {
-                box-shadow: 0 8px 30px rgba(37, 99, 235, 0.6);
+                box-shadow: 0 8px 35px rgba(37, 99, 235, 0.7);
             }
-        }
-
-        /* Mejorar inputs en focus */
-        input:focus {
-            outline: none;
-            border-color: var(--primary) !important;
-            box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.1) !important;
-            transform: translateY(-1px);
         }
 
         /* Responsive */
         @media (max-width: 768px) {
             .lugares-grid {
-                grid-template-columns: repeat(auto-fill, minmax(60px, 1fr));
+                grid-template-columns: repeat(auto-fill, minmax(65px, 1fr));
                 gap: 0.75rem;
             }
 
             .lugar-item {
-                font-size: 0.95rem;
+                font-size: 1rem;
             }
         }
     </style>
