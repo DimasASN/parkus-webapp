@@ -5,94 +5,6 @@
     <meta name="viewport" content="width=device-width,initial-scale=1" />
     <title>ParkUS - Detalle del parqueadero</title>
     <link rel="stylesheet" href="assets/css/styles.css" />
-    <style>
-        /* ESTILOS FORZADOS PARA LUGARES - MÁXIMA PRIORIDAD */
-        #lugares-container {
-            display: grid !important;
-            grid-template-columns: repeat(auto-fill, minmax(90px, 1fr)) !important;
-            gap: 1.25rem !important;
-            margin-top: 1.5rem !important;
-            padding: 0.5rem !important;
-        }
-
-        #lugares-container > * {
-            width: 100% !important;
-            height: 90px !important;
-            border-radius: 16px !important;
-            display: flex !important;
-            align-items: center !important;
-            justify-content: center !important;
-            font-weight: 900 !important;
-            font-size: 1.5rem !important;
-            cursor: pointer !important;
-            border-width: 3px !important;
-            border-style: solid !important;
-            position: relative !important;
-            overflow: hidden !important;
-            font-family: system-ui, -apple-system, sans-serif !important;
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1) !important;
-        }
-
-        /* DISPONIBLE - VERDE */
-        #lugares-container > [data-estado="disponible"],
-        #lugares-container > .disponible {
-            background: linear-gradient(135deg, #d1fae5 0%, #10b981 100%) !important;
-            border-color: #059669 !important;
-            color: #064e3b !important;
-            box-shadow: 0 6px 15px rgba(16, 185, 129, 0.3) !important;
-        }
-
-        #lugares-container > [data-estado="disponible"]:hover,
-        #lugares-container > .disponible:hover {
-            transform: translateY(-8px) scale(1.08) !important;
-            box-shadow: 0 12px 30px rgba(16, 185, 129, 0.5) !important;
-            border-color: #047857 !important;
-        }
-
-        /* OCUPADO - ROJO */
-        #lugares-container > [data-estado="ocupado"],
-        #lugares-container > .ocupado {
-            background: linear-gradient(135deg, #fee2e2 0%, #ef4444 100%) !important;
-            border-color: #dc2626 !important;
-            color: #7f1d1d !important;
-            opacity: 0.6 !important;
-            cursor: not-allowed !important;
-            box-shadow: 0 6px 15px rgba(239, 68, 68, 0.2) !important;
-        }
-
-        /* SELECCIONADO - AZUL */
-        #lugares-container > [data-estado="seleccionado"],
-        #lugares-container > .seleccionado {
-            background: linear-gradient(135deg, #3b82f6 0%, #1e40af 100%) !important;
-            border-color: #1e3a8a !important;
-            color: #ffffff !important;
-            transform: scale(1.15) !important;
-            box-shadow: 0 10px 35px rgba(37, 99, 235, 0.6) !important;
-            font-size: 1.7rem !important;
-            animation: pulseAzul 2.5s ease-in-out infinite !important;
-        }
-
-        @keyframes pulseAzul {
-            0%, 100% {
-                box-shadow: 0 10px 35px rgba(37, 99, 235, 0.6) !important;
-                transform: scale(1.15) !important;
-            }
-            50% {
-                box-shadow: 0 15px 50px rgba(37, 99, 235, 0.8) !important;
-                transform: scale(1.18) !important;
-            }
-        }
-
-        @media (max-width: 768px) {
-            #lugares-container {
-                grid-template-columns: repeat(auto-fill, minmax(70px, 1fr)) !important;
-            }
-            #lugares-container > * {
-                height: 70px !important;
-                font-size: 1.3rem !important;
-            }
-        }
-    </style>
 </head>
 <body>
     <header class="header">
@@ -110,37 +22,26 @@
         <!-- Mapa de lugares -->
         <section id="lugares-section" style="margin-bottom: 2rem;">
             <div style="background: white; padding: 2rem; border-radius: 12px; box-shadow: 0 1px 3px rgba(0,0,0,0.1);">
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; flex-wrap: wrap; gap: 1rem;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
                     <h3 style="font-size: 1.5rem; font-weight: 700; margin: 0;">Selecciona tu lugar</h3>
                     <!-- Leyenda -->
-                    <div style="display: flex; gap: 1.5rem; font-size: 0.875rem; flex-wrap: wrap;">
+                    <div style="display: flex; gap: 1.5rem; font-size: 0.875rem;">
                         <div style="display: flex; align-items: center; gap: 0.5rem;">
-                            <div style="width: 20px; height: 20px; background: linear-gradient(135deg, #d1fae5, #10b981); border: 2px solid #10b981; border-radius: 4px;"></div>
+                            <div style="width: 20px; height: 20px; background: #ecfdf5; border: 2px solid #10b981; border-radius: 4px;"></div>
                             <span>Disponible</span>
                         </div>
                         <div style="display: flex; align-items: center; gap: 0.5rem;">
-                            <div style="width: 20px; height: 20px; background: linear-gradient(135deg, #fee2e2, #ef4444); border: 2px solid #ef4444; border-radius: 4px;"></div>
+                            <div style="width: 20px; height: 20px; background: #fef2f2; border: 2px solid #ef4444; border-radius: 4px;"></div>
                             <span>Ocupado</span>
                         </div>
                         <div style="display: flex; align-items: center; gap: 0.5rem;">
-                            <div style="width: 20px; height: 20px; background: linear-gradient(135deg, #3b82f6, #1e40af); border: 2px solid #1e40af; border-radius: 4px;"></div>
+                            <div style="width: 20px; height: 20px; background: #2563eb; border: 2px solid #1e40af; border-radius: 4px;"></div>
                             <span>Seleccionado</span>
                         </div>
                     </div>
                 </div>
-                
-                <!-- DEMO DE LUGARES PARA PROBAR -->
-                <div id="lugares-container">
-                    <div data-estado="disponible">1</div>
-                    <div data-estado="disponible">2</div>
-                    <div data-estado="seleccionado">3</div>
-                    <div data-estado="disponible">4</div>
-                    <div data-estado="ocupado">5</div>
-                    <div data-estado="disponible">6</div>
-                    <div data-estado="ocupado">7</div>
-                    <div data-estado="disponible">8</div>
-                    <div data-estado="disponible">9</div>
-                    <div data-estado="disponible">10</div>
+                <div id="lugares-container" class="lugares-grid">
+                    <!-- Se llenará dinámicamente -->
                 </div>
             </div>
         </section>
@@ -199,19 +100,5 @@
 
     <script src="js/api.js"></script>
     <script src="js/detalle-parqueadero.js"></script>
-    
-    <script>
-        // Asegurar que los estilos se apliquen dinámicamente
-        document.addEventListener('DOMContentLoaded', function() {
-            const lugares = document.querySelectorAll('#lugares-container > *');
-            lugares.forEach(function(lugar) {
-                // Agregar clases basadas en data-estado
-                const estado = lugar.getAttribute('data-estado');
-                if (estado) {
-                    lugar.classList.add(estado);
-                }
-            });
-        });
-    </script>
 </body>
 </html>
