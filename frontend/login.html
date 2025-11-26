@@ -10,32 +10,120 @@
 <body>
 
     <header class="header">
-        <h1 class="logo">ParkUS</h1>
+        <a href="index.html" style="text-decoration: none;">
+            <h1 class="logo">ParkUS</h1>
+        </a>
     </header>
 
     <main class="container">
 
-        <h2 class="title">Iniciar sesión</h2>
+        <div style="max-width: 480px; margin: 0 auto;">
+            <h2 class="title" style="margin-bottom: 0.5rem;">¡Bienvenido de vuelta! 👋</h2>
+            <p style="text-align: center; color: white; margin-bottom: 2.5rem; font-size: 1.1rem; text-shadow: 0 2px 4px rgba(0,0,0,0.2);">
+                Inicia sesión para gestionar tus reservas
+            </p>
 
-        <form id="loginForm" class="form">
+            <form id="loginForm" class="form">
 
-            <label for="username">Usuario</label>
-            <input type="text" id="username" placeholder="admin" required>
+                <div style="margin-bottom: 1.75rem;">
+                    <label for="username">
+                        <span style="display: flex; align-items: center; gap: 0.5rem;">
+                            👤 Nombre de usuario
+                        </span>
+                    </label>
+                    <input 
+                        type="text" 
+                        id="username" 
+                        placeholder="Ingresa tu usuario" 
+                        required
+                        autocomplete="username"
+                        style="font-size: 1.05rem;"
+                    >
+                </div>
 
-            <label for="password">Contraseña</label>
-            <input type="password" id="password" placeholder="••••••••" required>
+                <div style="margin-bottom: 2rem;">
+                    <label for="password">
+                        <span style="display: flex; align-items: center; gap: 0.5rem;">
+                            🔒 Contraseña
+                        </span>
+                    </label>
+                    <div style="position: relative;">
+                        <input 
+                            type="password" 
+                            id="password" 
+                            placeholder="Ingresa tu contraseña" 
+                            required
+                            autocomplete="current-password"
+                            style="font-size: 1.05rem; padding-right: 3rem; margin-bottom: 0.5rem;"
+                        >
+                        <button 
+                            type="button" 
+                            onclick="togglePassword()" 
+                            style="
+                                position: absolute;
+                                right: 1rem;
+                                top: 1rem;
+                                background: none;
+                                border: none;
+                                cursor: pointer;
+                                font-size: 1.25rem;
+                                transition: transform 0.2s;
+                            "
+                            onmouseover="this.style.transform='scale(1.2)'"
+                            onmouseout="this.style.transform='scale(1)'"
+                        >👁️</button>
+                    </div>
+                </div>
 
-            <button type="submit" class="btn-primary">Ingresar</button>
-        </form>
+                <button type="submit" class="btn-primary" style="font-size: 1.1rem; padding: 1.125rem;">
+                    🚀 Iniciar Sesión
+                </button>
 
-        <p class="text-center">
-            ¿No tienes cuenta?  
-            <a href="register.html" class="link">Registrarse</a>
-        </p>
+                <div style="margin-top: 1.5rem; padding-top: 1.5rem; border-top: 1px solid var(--border);">
+                    <p class="text-center" style="color: var(--gray); font-weight: 500;">
+                        ¿No tienes cuenta?  
+                        <a href="register.html" class="link" style="font-size: 1.05rem;">
+                            Regístrate aquí
+                        </a>
+                    </p>
+                </div>
+            </form>
+
+            <!-- Información adicional -->
+            <div style="margin-top: 2.5rem; text-align: center;">
+                <p style="color: white; font-size: 0.9rem; opacity: 0.9; text-shadow: 0 1px 2px rgba(0,0,0,0.2);">
+                    🔒 Tu información está protegida y segura
+                </p>
+            </div>
+        </div>
 
     </main>
 
     <script src="js/api.js"></script>
     <script src="js/login.js"></script>
+    <script>
+        function togglePassword() {
+            const passwordInput = document.getElementById('password');
+            const toggleBtn = event.currentTarget;
+            
+            if (passwordInput.type === 'password') {
+                passwordInput.type = 'text';
+                toggleBtn.textContent = '🙈';
+            } else {
+                passwordInput.type = 'password';
+                toggleBtn.textContent = '👁️';
+            }
+        }
+
+        // Efecto de focus mejorado
+        document.querySelectorAll('input').forEach(input => {
+            input.addEventListener('focus', function() {
+                this.parentElement.style.transform = 'scale(1.01)';
+            });
+            input.addEventListener('blur', function() {
+                this.parentElement.style.transform = '';
+            });
+        });
+    </script>
 </body>
 </html>
