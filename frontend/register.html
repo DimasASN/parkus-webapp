@@ -3,51 +3,242 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>ParkUS - Registrarse</title>
+    <title>ParkUS - Crear Cuenta</title>
     <link rel="stylesheet" href="assets/css/styles.css" />
 </head>
 
 <body>
 
     <header class="header">
-        <h1 class="logo">ParkUS</h1>
+        <a href="index.html" style="text-decoration: none;">
+            <h1 class="logo">ParkUS</h1>
+        </a>
     </header>
 
     <main class="container">
 
-        <h2 class="title">Crear cuenta</h2>
+        <div style="max-width: 550px; margin: 0 auto;">
+            <h2 class="title" style="margin-bottom: 0.5rem;">Crea tu cuenta 🎉</h2>
+            <p style="text-align: center; color: white; margin-bottom: 2.5rem; font-size: 1.1rem; text-shadow: 0 2px 4px rgba(0,0,0,0.2);">
+                Únete a ParkUS y reserva tu espacio ideal
+            </p>
 
-        <form id="registerForm" class="form">
+            <form id="registerForm" class="form">
 
-            <label for="username">Nombre de usuario *</label>
-            <input type="text" id="username" placeholder="juanperez" required>
+                <div style="margin-bottom: 1.5rem;">
+                    <label for="username">
+                        <span style="display: flex; align-items: center; gap: 0.5rem;">
+                            👤 Nombre de usuario *
+                        </span>
+                    </label>
+                    <input 
+                        type="text" 
+                        id="username" 
+                        placeholder="Ej: juanperez" 
+                        required
+                        autocomplete="username"
+                        pattern="[a-zA-Z0-9_]{3,50}"
+                        title="Entre 3-50 caracteres (solo letras, números y guiones bajos)"
+                    >
+                    <small style="color: var(--gray); font-size: 0.85rem; display: block; margin-top: -1rem;">
+                        Solo letras, números y guiones bajos (3-50 caracteres)
+                    </small>
+                </div>
 
-            <label for="nombre">Nombre completo *</label>
-            <input type="text" id="nombre" placeholder="Juan Pérez" required>
+                <div style="margin-bottom: 1.5rem;">
+                    <label for="nombre">
+                        <span style="display: flex; align-items: center; gap: 0.5rem;">
+                            📝 Nombre completo *
+                        </span>
+                    </label>
+                    <input 
+                        type="text" 
+                        id="nombre" 
+                        placeholder="Ej: Juan Pérez" 
+                        required
+                        autocomplete="name"
+                    >
+                </div>
 
-            <label for="correo">Correo electrónico *</label>
-            <input type="email" id="correo" placeholder="usuario@correo.com" required>
+                <div style="margin-bottom: 1.5rem;">
+                    <label for="correo">
+                        <span style="display: flex; align-items: center; gap: 0.5rem;">
+                            ✉️ Correo electrónico *
+                        </span>
+                    </label>
+                    <input 
+                        type="email" 
+                        id="correo" 
+                        placeholder="usuario@correo.com" 
+                        required
+                        autocomplete="email"
+                    >
+                </div>
 
-            <label for="telefono">Teléfono *</label>
-            <input type="tel" id="telefono" placeholder="3001234567" maxlength="10" required>
+                <div style="margin-bottom: 1.5rem;">
+                    <label for="telefono">
+                        <span style="display: flex; align-items: center; gap: 0.5rem;">
+                            📱 Teléfono *
+                        </span>
+                    </label>
+                    <input 
+                        type="tel" 
+                        id="telefono" 
+                        placeholder="3001234567" 
+                        maxlength="10" 
+                        required
+                        autocomplete="tel"
+                        pattern="[0-9]{10}"
+                        title="Debe tener exactamente 10 dígitos"
+                    >
+                    <small style="color: var(--gray); font-size: 0.85rem; display: block; margin-top: -1rem;">
+                        10 dígitos sin espacios ni guiones
+                    </small>
+                </div>
 
-            <label for="password">Contraseña *</label>
-            <input type="password" id="password" placeholder="••••••••" required>
+                <div style="margin-bottom: 1.5rem;">
+                    <label for="password">
+                        <span style="display: flex; align-items: center; gap: 0.5rem;">
+                            🔒 Contraseña *
+                        </span>
+                    </label>
+                    <div style="position: relative;">
+                        <input 
+                            type="password" 
+                            id="password" 
+                            placeholder="Mínimo 6 caracteres" 
+                            required
+                            autocomplete="new-password"
+                            minlength="6"
+                            style="padding-right: 3rem; margin-bottom: 0.5rem;"
+                        >
+                        <button 
+                            type="button" 
+                            onclick="togglePasswordVisibility('password')" 
+                            style="
+                                position: absolute;
+                                right: 1rem;
+                                top: 1rem;
+                                background: none;
+                                border: none;
+                                cursor: pointer;
+                                font-size: 1.25rem;
+                                transition: transform 0.2s;
+                            "
+                            onmouseover="this.style.transform='scale(1.2)'"
+                            onmouseout="this.style.transform='scale(1)'"
+                        >👁️</button>
+                    </div>
+                    <small style="color: var(--gray); font-size: 0.85rem; display: block; margin-top: -1rem;">
+                        Mínimo 6 caracteres
+                    </small>
+                </div>
 
-            <label for="password2">Confirmar contraseña *</label>
-            <input type="password" id="password2" placeholder="••••••••" required>
+                <div style="margin-bottom: 2rem;">
+                    <label for="password2">
+                        <span style="display: flex; align-items: center; gap: 0.5rem;">
+                            🔒 Confirmar contraseña *
+                        </span>
+                    </label>
+                    <div style="position: relative;">
+                        <input 
+                            type="password" 
+                            id="password2" 
+                            placeholder="Repite tu contraseña" 
+                            required
+                            autocomplete="new-password"
+                            minlength="6"
+                            style="padding-right: 3rem; margin-bottom: 0.5rem;"
+                        >
+                        <button 
+                            type="button" 
+                            onclick="togglePasswordVisibility('password2')" 
+                            style="
+                                position: absolute;
+                                right: 1rem;
+                                top: 1rem;
+                                background: none;
+                                border: none;
+                                cursor: pointer;
+                                font-size: 1.25rem;
+                                transition: transform 0.2s;
+                            "
+                            onmouseover="this.style.transform='scale(1.2)'"
+                            onmouseout="this.style.transform='scale(1)'"
+                        >👁️</button>
+                    </div>
+                </div>
 
-            <button type="submit" class="btn-primary">Registrarse</button>
-        </form>
+                <button type="submit" class="btn-primary" style="font-size: 1.1rem; padding: 1.125rem;">
+                    🎉 Crear Mi Cuenta
+                </button>
 
-        <p class="text-center">
-            ¿Ya tienes una cuenta?  
-            <a href="login.html" class="link">Iniciar sesión</a>
-        </p>
+                <div style="margin-top: 1.5rem; padding-top: 1.5rem; border-top: 1px solid var(--border);">
+                    <p class="text-center" style="color: var(--gray); font-weight: 500;">
+                        ¿Ya tienes una cuenta?  
+                        <a href="login.html" class="link" style="font-size: 1.05rem;">
+                            Inicia sesión aquí
+                        </a>
+                    </p>
+                </div>
+            </form>
+
+            <!-- Información adicional -->
+            <div style="margin-top: 2.5rem; text-align: center;">
+                <p style="color: white; font-size: 0.9rem; opacity: 0.9; text-shadow: 0 1px 2px rgba(0,0,0,0.2);">
+                    🔒 Al registrarte, aceptas nuestras políticas de privacidad
+                </p>
+            </div>
+        </div>
 
     </main>
-    
+
     <script src="js/api.js"></script>
     <script src="js/register.js"></script>
+    <script>
+        function togglePasswordVisibility(inputId) {
+            const passwordInput = document.getElementById(inputId);
+            const toggleBtn = event.currentTarget;
+            
+            if (passwordInput.type === 'password') {
+                passwordInput.type = 'text';
+                toggleBtn.textContent = '🙈';
+            } else {
+                passwordInput.type = 'password';
+                toggleBtn.textContent = '👁️';
+            }
+        }
+
+        // Validación en tiempo real
+        document.getElementById('password2')?.addEventListener('input', function() {
+            const password = document.getElementById('password').value;
+            const password2 = this.value;
+            
+            if (password2 && password !== password2) {
+                this.style.borderColor = 'var(--danger)';
+            } else if (password2) {
+                this.style.borderColor = 'var(--secondary)';
+            }
+        });
+
+        // Validación de teléfono en tiempo real
+        document.getElementById('telefono')?.addEventListener('input', function() {
+            this.value = this.value.replace(/[^0-9]/g, '');
+            
+            if (this.value.length === 10) {
+                this.style.borderColor = 'var(--secondary)';
+            }
+        });
+
+        // Efecto de focus mejorado
+        document.querySelectorAll('input').forEach(input => {
+            input.addEventListener('focus', function() {
+                this.parentElement.parentElement.style.transform = 'scale(1.01)';
+            });
+            input.addEventListener('blur', function() {
+                this.parentElement.parentElement.style.transform = '';
+            });
+        });
+    </script>
 </body>
 </html>
