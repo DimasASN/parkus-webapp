@@ -95,7 +95,8 @@ async function crearReserva(req, res, next) {
 
     console.log('✅ Vehículo registrado/actualizado');
 
-    // ⚠️ CAMBIO IMPORTANTE: Actualizar el lugar con estado 3 (Reservado)
+    // ✅ Actualizar el lugar con estado 3 (Reservado)
+    // El TRIGGER se encargará de actualizar los contadores automáticamente
     const lugarActualizado = await prisma.info_lugares.update({
       where: {
         id_empresa_lugar: {
@@ -105,22 +106,16 @@ async function crearReserva(req, res, next) {
       },
       data: {
         placa_vehiculo: placa_vehiculo.toUpperCase(),
-        id_estado: 3, // ✅ 3 = Reservado (antes estaba en 2)
+        id_estado: 3, // ✅ 3 = Reservado
       },
     });
 
     console.log('✅ Lugar actualizado a RESERVADO (estado 3)');
+    console.log('✅ Trigger actualizó los contadores automáticamente');
 
-    // Actualizar contadores del parqueadero
-    await prisma.info_park.update({
-      where: { id_empresa: parseInt(id_empresa) },
-      data: {
-        lug_disponibles: { decrement: 1 },
-        lug_ocupados: { increment: 1 },
-      },
-    });
+    // 🔥 NOTA IMPORTANTE: NO actualizamos manualmente los contadores
+    // porque el trigger trg_update_park_counts lo hace automáticamente
 
-    console.log('✅ Contadores actualizados');
     console.log('🎉 Reserva creada exitosamente');
 
     res.status(201).json({
@@ -130,7 +125,7 @@ async function crearReserva(req, res, next) {
         id_empresa: lugarActualizado.id_empresa,
         numero_lugar: lugarActualizado.lugar,
         placa_vehiculo: lugarActualizado.placa_vehiculo,
-        estado: 'Reservado', // Estado textual
+        estado: 'Reservado',
         estado_id: 3,
       },
     });
@@ -173,7 +168,7 @@ async function liberarLugar(req, res, next) {
       });
     }
 
-    // ✅ MEJORA: Permitir liberar tanto si está Ocupado (2) como Reservado (3)
+    // ✅ Permitir liberar tanto si está Ocupado (2) como Reservado (3)
     if (lugar.id_estado === 1) {
       return res.status(400).json({
         success: false,
@@ -183,7 +178,8 @@ async function liberarLugar(req, res, next) {
 
     console.log(`✅ Liberando lugar en estado ${lugar.id_estado}`);
 
-    // Liberar el lugar
+    // ✅ Liberar el lugar
+    // El TRIGGER se encargará de actualizar los contadores automáticamente
     await prisma.info_lugares.update({
       where: {
         id_empresa_lugar: {
@@ -198,17 +194,11 @@ async function liberarLugar(req, res, next) {
     });
 
     console.log('✅ Lugar liberado');
+    console.log('✅ Trigger actualizó los contadores automáticamente');
 
-    // Actualizar contadores
-    await prisma.info_park.update({
-      where: { id_empresa: parseInt(id_empresa) },
-      data: {
-        lug_disponibles: { increment: 1 },
-        lug_ocupados: { decrement: 1 },
-      },
-    });
+    // 🔥 NOTA: NO actualizamos manualmente los contadores
+    // porque el trigger lo hace automáticamente
 
-    console.log('✅ Contadores actualizados');
     console.log('🎉 Lugar liberado exitosamente');
 
     res.json({
@@ -267,7 +257,9 @@ async function marcarComoOcupado(req, res, next) {
       });
     }
 
-    // Actualizar estado a Ocupado
+    // ✅ Actualizar estado a Ocupado
+    // Como el estado sigue siendo diferente de 1 (Disponible),
+    // el trigger NO modificará los contadores (sigue ocupado el lugar)
     await prisma.info_lugares.update({
       where: {
         id_empresa_lugar: {
@@ -349,6 +341,6 @@ async function consultarReservaPorPlaca(req, res, next) {
 module.exports = {
   crearReserva,
   liberarLugar,
-  marcarComoOcupado, // ✅ Nueva función exportada
+  marcarComoOcupado,
   consultarReservaPorPlaca,
 };
