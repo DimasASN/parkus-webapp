@@ -815,3 +815,193 @@ html {
 ::-webkit-scrollbar-thumb:hover {
   background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary) 100%);
 }
+
+/* ============================================
+   ESTILOS PARA LUGARES DE PARQUEO
+   Solo afecta a la página de detalle-parqueadero.html
+   ============================================ */
+
+.lugares-grid {
+  display: grid !important;
+  grid-template-columns: repeat(auto-fill, minmax(90px, 1fr)) !important;
+  gap: 1.25rem !important;
+  margin-top: 1.5rem !important;
+  padding: 0.5rem !important;
+}
+
+.lugar-item {
+  width: 100% !important;
+  height: 90px !important;
+  border-radius: 16px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  font-weight: 900 !important;
+  font-size: 1.5rem !important;
+  cursor: pointer !important;
+  border-width: 3px !important;
+  border-style: solid !important;
+  position: relative !important;
+  overflow: hidden !important;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif !important;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1) !important;
+  box-shadow: 0 6px 15px rgba(0,0,0,0.12) !important;
+}
+
+/* Efecto ripple al hacer hover */
+.lugar-item::before {
+  content: '' !important;
+  position: absolute !important;
+  top: 50% !important;
+  left: 50% !important;
+  width: 0 !important;
+  height: 0 !important;
+  border-radius: 50% !important;
+  background: rgba(255, 255, 255, 0.5) !important;
+  transform: translate(-50%, -50%) !important;
+  transition: width 0.7s ease-out, height 0.7s ease-out !important;
+  z-index: 0 !important;
+}
+
+.lugar-item:hover::before {
+  width: 250% !important;
+  height: 250% !important;
+}
+
+/* LUGAR DISPONIBLE - Verde brillante */
+.lugar-disponible {
+  background: linear-gradient(135deg, #d1fae5 0%, #10b981 100%) !important;
+  border-color: #059669 !important;
+  color: #064e3b !important;
+}
+
+.lugar-disponible:hover {
+  transform: translateY(-8px) scale(1.08) rotate(2deg) !important;
+  box-shadow: 0 12px 30px rgba(16, 185, 129, 0.45) !important;
+  border-color: #047857 !important;
+}
+
+.lugar-disponible:active {
+  transform: translateY(-4px) scale(1.05) !important;
+}
+
+/* LUGAR OCUPADO - Rojo apagado */
+.lugar-ocupado {
+  background: linear-gradient(135deg, #fee2e2 0%, #ef4444 100%) !important;
+  border-color: #dc2626 !important;
+  color: #7f1d1d !important;
+  cursor: not-allowed !important;
+  opacity: 0.6 !important;
+  filter: grayscale(0.2) !important;
+}
+
+.lugar-ocupado:hover {
+  transform: none !important;
+  box-shadow: 0 6px 15px rgba(0,0,0,0.12) !important;
+}
+
+.lugar-ocupado::after {
+  content: '✕' !important;
+  position: absolute !important;
+  font-size: 3rem !important;
+  color: rgba(127, 29, 29, 0.2) !important;
+  z-index: 0 !important;
+}
+
+/* LUGAR SELECCIONADO - Azul brillante con animación */
+.lugar-seleccionado {
+  background: linear-gradient(135deg, #3b82f6 0%, #1e40af 100%) !important;
+  border-color: #1e3a8a !important;
+  color: #ffffff !important;
+  transform: scale(1.15) !important;
+  box-shadow: 0 10px 35px rgba(37, 99, 235, 0.6) !important;
+  animation: pulse-lugar-seleccionado 2.5s ease-in-out infinite !important;
+  font-size: 1.7rem !important;
+}
+
+.lugar-seleccionado::after {
+  content: '✓' !important;
+  position: absolute !important;
+  top: 5px !important;
+  right: 8px !important;
+  background: rgba(255, 255, 255, 0.3) !important;
+  width: 24px !important;
+  height: 24px !important;
+  border-radius: 50% !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  font-size: 0.9rem !important;
+  font-weight: bold !important;
+  z-index: 2 !important;
+}
+
+@keyframes pulse-lugar-seleccionado {
+  0%, 100% {
+    box-shadow: 0 10px 35px rgba(37, 99, 235, 0.6) !important;
+    transform: scale(1.15) !important;
+  }
+  50% {
+    box-shadow: 0 15px 50px rgba(37, 99, 235, 0.8) !important;
+    transform: scale(1.18) !important;
+  }
+}
+
+/* Animación de entrada para los lugares */
+@keyframes fadeInScale {
+  from {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.lugar-item {
+  animation: fadeInScale 0.5s ease-out backwards !important;
+}
+
+/* Delay escalonado para la animación de entrada */
+.lugar-item:nth-child(1) { animation-delay: 0.05s !important; }
+.lugar-item:nth-child(2) { animation-delay: 0.1s !important; }
+.lugar-item:nth-child(3) { animation-delay: 0.15s !important; }
+.lugar-item:nth-child(4) { animation-delay: 0.2s !important; }
+.lugar-item:nth-child(5) { animation-delay: 0.25s !important; }
+.lugar-item:nth-child(6) { animation-delay: 0.3s !important; }
+.lugar-item:nth-child(7) { animation-delay: 0.35s !important; }
+.lugar-item:nth-child(8) { animation-delay: 0.4s !important; }
+.lugar-item:nth-child(9) { animation-delay: 0.45s !important; }
+.lugar-item:nth-child(10) { animation-delay: 0.5s !important; }
+.lugar-item:nth-child(11) { animation-delay: 0.55s !important; }
+.lugar-item:nth-child(12) { animation-delay: 0.6s !important; }
+.lugar-item:nth-child(13) { animation-delay: 0.65s !important; }
+.lugar-item:nth-child(14) { animation-delay: 0.7s !important; }
+.lugar-item:nth-child(15) { animation-delay: 0.75s !important; }
+
+/* Responsive para lugares */
+@media (max-width: 768px) {
+  .lugares-grid {
+    grid-template-columns: repeat(auto-fill, minmax(70px, 1fr)) !important;
+    gap: 1rem !important;
+  }
+
+  .lugar-item {
+    height: 70px !important;
+    font-size: 1.3rem !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .lugares-grid {
+    grid-template-columns: repeat(auto-fill, minmax(60px, 1fr)) !important;
+    gap: 0.75rem !important;
+  }
+
+  .lugar-item {
+    height: 60px !important;
+    font-size: 1.1rem !important;
+    border-width: 2px !important;
+  }
+}
